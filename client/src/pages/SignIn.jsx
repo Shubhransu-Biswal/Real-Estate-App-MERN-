@@ -1,11 +1,87 @@
-import React from 'react'
+// src/Signup.js
 
-const SignIn = () => {
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom"; // Import Link from react-router-dom
+import { useDispatch, useSelector } from "react-redux";
+import {
+  signinStart,
+  signinFailed,
+  signinSuccess,
+} from "../redux/slices/userSlice";
+
+const Signin = () => {
+  const [formData, setFormData] = useState({});
+  const { error, loading, currentUser } = useSelector((state) => state.user);
+
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const inputHandler = (e) => {
+    setFormData((data) => {
+      return {
+        ...formData,
+        [e.target.id]: e.target.value,
+      };
+    });
+  };
+  const submitHandler = async (e) => {
+    e.preventDefault();
+    dispatch(signinStart());
+    const response = await fetch("/api/v1/auth/signin", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(formData),
+    });
+
+    const responseData = await response.json();
+    if (!response.ok) {
+      dispatch(signinFailed(responseData));
+      setError(responseData.message);
+      throw new Error(responseData.message);
+    }
+    dispatch(signinSuccess(responseData.body.user));
+    navigate("/");
+  };
   return (
-    <div>
-      SIGNIN
+    <div className="min-h-screen flex items-center justify-center bg-gray-100">
+      <form
+        onSubmit={submitHandler}
+        className="bg-white p-8 rounded shadow-md w-96"
+      >
+        <h2 className="text-2xl font-semibold mb-4">Sign In</h2>
+        <div className="mb-4">
+          <input
+            type="email"
+            placeholder="Email"
+            className="w-full p-2 border rounded"
+            onChange={inputHandler}
+            id="email"
+          />
+        </div>
+        <div className="mb-4">
+          <input
+            type="password"
+            placeholder="Password"
+            className="w-full p-2 border rounded"
+            onChange={inputHandler}
+            id="password"
+          />
+        </div>
+        <button className="w-full bg-blue-500 text-white py-2 rounded">
+          {loading ? "Signing in..." : "Sign in"}
+        </button>
+        {error && <p>{error}</p>}
+        <p className="mt-4 text-gray-600 text-sm">
+          Dont have an account?{" "}
+          <Link to="/sign-up" className="text-blue-500">
+            Sign Up
+          </Link>
+        </p>
+      </form>
     </div>
-  )
-}
+  );
+};
 
-export default SignIn
+export default Signin;
