@@ -64,12 +64,15 @@ export const google = catchAsync(async (req, res, next) => {
       }
     );
 
-    res.cookie("access_token", token, { httpOnly: true }).status(200).json({
-      status: "success",
-      body: {
-        user,
-      },
-    });
+    res
+      .cookie("access_token", token, { httpOnly: true })
+      .status(200)
+      .json({
+        status: "success",
+        body: {
+          newUser: user,
+        },
+      });
   } else {
     const newPassword =
       Math.random().toString(36).slice(-8) +

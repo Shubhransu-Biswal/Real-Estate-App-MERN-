@@ -28,7 +28,6 @@ const Oauth = () => {
       });
 
       const resData = await res.json();
-      console.log(resData);
       dispatch(signinSuccess(resData));
       navigate("/");
     } catch (error) {
