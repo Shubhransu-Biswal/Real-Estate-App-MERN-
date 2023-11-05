@@ -8,6 +8,7 @@ import {
   signinFailed,
   signinSuccess,
 } from "../redux/slices/userSlice";
+import Oauth from "../components/Oauth";
 
 const Signin = () => {
   const [formData, setFormData] = useState({});
@@ -72,6 +73,7 @@ const Signin = () => {
         <button className="w-full bg-blue-500 text-white py-2 rounded">
           {loading ? "Signing in..." : "Sign in"}
         </button>
+        <Oauth></Oauth>
         {error && <p>{error}</p>}
         <p className="mt-4 text-gray-600 text-sm">
           Dont have an account?{" "}

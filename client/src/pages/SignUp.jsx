@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom"; // Import Link from react-router-dom
+import Oauth from "../components/Oauth";
 
 const Signup = () => {
   const [formData, setFormData] = useState({});
@@ -20,23 +21,23 @@ const Signup = () => {
   };
   const submitHandler = async (e) => {
     e.preventDefault();
-      isLoading(true);
-      const response = await fetch("/api/v1/auth/signup", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
-      });
+    isLoading(true);
+    const response = await fetch("/api/v1/auth/signup", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(formData),
+    });
 
-      const responseData = await response.json();
-      if (!response.ok) {
-        isLoading(false)
-        setError(responseData.message);
-        throw new Error(responseData.message);
-      }
+    const responseData = await response.json();
+    if (!response.ok) {
       isLoading(false);
-      navigate("/sign-in");
+      setError(responseData.message);
+      throw new Error(responseData.message);
+    }
+    isLoading(false);
+    navigate("/sign-in");
   };
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100">
@@ -75,6 +76,7 @@ const Signup = () => {
         <button className="w-full bg-blue-500 text-white py-2 rounded">
           {loading ? "Signing up..." : "Sign up"}
         </button>
+        <Oauth></Oauth>
         {error && <p>{error}</p>}
         <p className="mt-4 text-gray-600 text-sm">
           Already have an account?{" "}
