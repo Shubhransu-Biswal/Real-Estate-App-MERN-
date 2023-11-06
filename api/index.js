@@ -3,6 +3,7 @@ import dotenv from "dotenv";
 import mongoose from "mongoose";
 import userRouter from "./public/routers/userRouter.js";
 import authRouter from "./public/routers/authRouter.js";
+import listingRouter from "./public/routers/listingRouter.js";
 import AppError from "./public/utils/appError.js";
 import cookieParser from "cookie-parser";
 const app = express();
@@ -25,6 +26,7 @@ mongoose
 // all routes
 app.use("/api/v1/users", userRouter);
 app.use("/api/v1/auth", authRouter);
+app.use("/api/v1/listing", listingRouter);
 
 // Handling unwanted route error
 app.all("*", (req, res, next) => {
