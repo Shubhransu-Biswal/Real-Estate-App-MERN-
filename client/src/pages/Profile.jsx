@@ -5,6 +5,14 @@ import {
   updatingStart,
   updatingSuccess,
   updatingFailed,
+  signinStart,
+  signinSuccess,
+  signinFailed,
+  deletingFailed,
+  deletingStart,
+  deletingSuccess,
+  signingoutStart,
+  signingoutSuccess,
 } from "../redux/slices/userSlice";
 import {
   getDownloadURL,
@@ -61,8 +69,6 @@ const Profile = () => {
     );
   };
 
-  console.log(formData);
-
   // update handler
   const updateHandler = (e) => {
     setFormData((data) => ({
@@ -100,6 +106,43 @@ const Profile = () => {
       dispatch(updatingFailed(err.message));
     }
   };
+
+  // delete and signout
+  console.log(currentUser);
+  const deleteHandler = async (e) => {
+    try {
+      dispatch(deletingStart());
+      const response = await fetch(
+        `/api/v1/users/delete/${currentUser.body.newUser._id}`,
+        {
+          method: "DELETE",
+        }
+      );
+      if (!response.ok) {
+        throw new Error(response.message);
+      }
+      dispatch(deletingSuccess());
+    } catch (err) {
+      console.log(err.message);
+      dispatch(deletingFailed(err.message));
+    }
+  };
+  const signoutHandler = async (e) => {
+    try {
+      dispatch(signingoutStart());
+      const response = await fetch(`/api/v1/auth/signout`, {
+        method: "POST",
+      });
+      if (!response.ok) {
+        throw new Error(response.message);
+      }
+      dispatch(signingoutSuccess());
+    } catch (err) {
+      console.log(err.message);
+      dispatch(signinFailed(err.message));
+    }
+  };
+
   // TimeOuts
   if (updateSuccess) {
     setTimeout(() => {
@@ -188,8 +231,12 @@ const Profile = () => {
         </div>
       </form>
       <div className="flex justify-between">
-        <span className="text-red-600 cursor-pointer">Delete account</span>
-        <span className="text-red-600 cursor-pointer">Sign out</span>
+        <span onClick={deleteHandler} className="text-red-600 cursor-pointer">
+          Delete account
+        </span>
+        <span onClick={signoutHandler} className="text-red-600 cursor-pointer">
+          Sign out
+        </span>
       </div>
       <div>
         <p className="text-green-500">

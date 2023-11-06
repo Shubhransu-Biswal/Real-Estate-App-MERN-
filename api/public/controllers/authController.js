@@ -125,3 +125,9 @@ export const protect = catchAsync(async (req, res, next) => {
 
   next();
 });
+
+// Signout user
+export const signout = catchAsync(async (req, res, next) => {
+  res.clearCookie("access_token");
+  res.status(200).json("Sign out the user successfully");
+});

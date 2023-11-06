@@ -8,6 +8,7 @@ export const uesrController = (req, res, next) => {
   });
 };
 
+// Update user
 export const updateUser = catchAsync(async (req, res, next) => {
   console.log(req.body);
 
@@ -35,4 +36,15 @@ export const updateUser = catchAsync(async (req, res, next) => {
       newUser: rest,
     },
   });
+});
+
+// Delete User
+export const deleteUser = catchAsync(async (req, res, next) => {
+  if (req.user.id !== req.params.id) {
+    return next(new AppError("You can only delete your account", 401));
+  }
+
+  await User.findByIdAndDelete(req.user.id);
+  res.clearCookie("access_token");
+  res.status(200).json("User deleted successfully");
 });
