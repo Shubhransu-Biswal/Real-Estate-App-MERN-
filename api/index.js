@@ -4,10 +4,14 @@ import mongoose from "mongoose";
 import userRouter from "./public/routers/userRouter.js";
 import authRouter from "./public/routers/authRouter.js";
 import AppError from "./public/utils/appError.js";
+import cookieParser from "cookie-parser";
 const app = express();
 
 // allowing sending json to server
 app.use(express.json());
+
+// allowing cookies
+app.use(cookieParser());
 
 // adding config file
 dotenv.config({ path: "./config.env" });
@@ -23,9 +27,9 @@ app.use("/api/v1/users", userRouter);
 app.use("/api/v1/auth", authRouter);
 
 // Handling unwanted route error
-app.all('*',(req,res,next)=>{
-    return next(new AppError('No such route present on this server',404))
-})
+app.all("*", (req, res, next) => {
+  return next(new AppError("No such route present on this server", 404));
+});
 
 // Global error handling middleware
 app.use((err, req, res, next) => {
