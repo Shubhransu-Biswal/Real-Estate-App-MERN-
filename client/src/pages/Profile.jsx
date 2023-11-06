@@ -1,6 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { useRef } from "react";
+import {
+  updatingStart,
+  updatingSuccess,
+  updatingFailed,
+} from "../redux/slices/userSlice";
 import {
   getDownloadURL,
   getStorage,
@@ -10,12 +15,17 @@ import {
 import { app } from "../firebase";
 
 const Profile = () => {
+  const { error, loading } = useSelector((state) => state.user);
   const currentUser = useSelector((state) => state.user.currentUser);
   const imageRef = useRef(null);
   const [file, setFile] = useState(undefined);
   const [filePerc, setFilePerc] = useState(0);
   const [fileUploadError, setFileUploadError] = useState(false);
   const [formData, setFormData] = useState({});
+  // timeout useStates
+  const [updateSuccess, setUpdateSuccess] = useState(false);
+  const [imageUpload, setImageUpload] = useState(false);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     if (file) {
@@ -34,20 +44,69 @@ const Profile = () => {
       (snapshot) => {
         const progress =
           (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-        console.log(progress);
         setFilePerc(Math.round(progress));
       },
       (error) => {
         setFileUploadError(true);
       },
       () => {
-        getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) =>
-          setFormData({ ...FormData, image: downloadURL })
-        );
+        getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+          setImageUpload(true);
+          return setFormData((data) => ({
+            ...currentUser.body.newUser,
+            image: downloadURL,
+          }));
+        });
       }
     );
   };
 
+  console.log(formData);
+
+  // update handler
+  const updateHandler = (e) => {
+    setFormData((data) => ({
+      ...currentUser.body.newUser,
+      [e.target.id]: e.target.value,
+    }));
+  };
+  // submitting
+  const submitHandler = async (e) => {
+    e.preventDefault();
+    try {
+      dispatch(updatingStart());
+      // sending request
+      const response = await fetch(
+        `/api/v1/users/update/${currentUser.body.newUser._id}`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(formData),
+        }
+      );
+
+      // throwing error if response error
+      if (!response.ok) {
+        throw new Error(response.message);
+      }
+
+      // extracting json data
+      const resData = await response.json();
+      dispatch(updatingSuccess(resData));
+      setUpdateSuccess(true);
+    } catch (err) {
+      dispatch(updatingFailed(err.message));
+    }
+  };
+  // TimeOuts
+  if (updateSuccess) {
+    setTimeout(() => {
+      setUpdateSuccess(false);
+      setImageUpload(false);
+    }, 5000);
+  }
   return (
     <div className="max-w-md mx-auto p-4 space-y-6">
       <h1 className="text-2xl font-bold text-center">Profile</h1>
@@ -63,16 +122,18 @@ const Profile = () => {
           {fileUploadError ? (
             <span>Error Occured</span>
           ) : filePerc > 0 && filePerc < 100 ? (
-            <span className="text-green-400">{`uploading ${filePerc} ...`}</span>
+            <span className="text-green-500">{`uploading ${filePerc}% ...`}</span>
           ) : filePerc === 100 ? (
-            <span className="text-green-400">File uploaded successfully✔</span>
+            <span className={imageUpload ? "text-green-500" : "hidden"}>
+              File uploaded successfully press save to change
+            </span>
           ) : (
             ""
           )}
         </div>
       </div>
 
-      <form>
+      <form onSubmit={submitHandler}>
         <div className="space-y-4">
           <div>
             <input
@@ -88,6 +149,9 @@ const Profile = () => {
               type="text"
               className="w-full border rounded-lg p-2"
               placeholder="Username"
+              defaultValue={currentUser.body.newUser.userName}
+              onChange={updateHandler}
+              id="userName"
             />
           </div>
 
@@ -96,6 +160,9 @@ const Profile = () => {
               type="email"
               className="w-full border rounded-lg p-2"
               placeholder="Email"
+              defaultValue={currentUser.body.newUser.email}
+              onChange={updateHandler}
+              id="email"
             />
           </div>
 
@@ -104,30 +171,31 @@ const Profile = () => {
               type="password"
               className="w-full border rounded-lg p-2"
               placeholder="Password"
+              onChange={updateHandler}
+              id="password"
             />
           </div>
         </div>
 
         <div className="mt-6">
           <button
+            disabled={loading}
             type="submit"
-            className="w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600"
+            className="disabled:bg-blue-300 w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600"
           >
-            Save
-          </button>
-        </div>
-        <div className="mt-2">
-          <button
-            type="button"
-            className="w-full bg-red-500 text-white py-2 rounded-lg hover:bg-red-600"
-          >
-            Cancel
+            {loading ? "Saving..." : "Save"}
           </button>
         </div>
       </form>
       <div className="flex justify-between">
         <span className="text-red-600 cursor-pointer">Delete account</span>
         <span className="text-red-600 cursor-pointer">Sign out</span>
+      </div>
+      <div>
+        <p className="text-green-500">
+          {updateSuccess ? "Data updated successfully" : ""}
+        </p>
+        <p className="text-red-500">{error ? error : ""}</p>
       </div>
     </div>
   );

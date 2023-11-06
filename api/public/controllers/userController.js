@@ -9,6 +9,8 @@ export const uesrController = (req, res, next) => {
 };
 
 export const updateUser = catchAsync(async (req, res, next) => {
+  console.log(req.body);
+
   if (req.params.id !== req.user.id) {
     return next(new AppError("You can only change your details", 401));
   }
@@ -17,7 +19,7 @@ export const updateUser = catchAsync(async (req, res, next) => {
     req.params.id,
     {
       $set: {
-        username: req.body.username,
+        userName: req.body.userName,
         email: req.body.email,
         password: req.body.password,
         image: req.body.image,
@@ -30,7 +32,7 @@ export const updateUser = catchAsync(async (req, res, next) => {
   res.status(200).json({
     status: "success",
     body: {
-      user: rest,
+      newUser: rest,
     },
   });
 });
