@@ -21,6 +21,7 @@ import {
   uploadBytesResumable,
 } from "firebase/storage";
 import { app } from "../firebase";
+import { Link } from "react-router-dom";
 
 const Profile = () => {
   const { error, loading } = useSelector((state) => state.user);
@@ -111,7 +112,7 @@ const Profile = () => {
   console.log(currentUser);
   const deleteHandler = async (e) => {
     try {
-      dispatch(deletingStart());
+      // dispatch(deletingStart());
       const response = await fetch(
         `/api/v1/users/delete/${currentUser.body.newUser._id}`,
         {
@@ -228,6 +229,12 @@ const Profile = () => {
           >
             {loading ? "Saving..." : "Save"}
           </button>
+          <Link
+            className=" block mt-4 text-center disabled:bg-blue-300 w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600"
+            to="/create-listing"
+          >
+            listing page
+          </Link>
         </div>
       </form>
       <div className="flex justify-between">

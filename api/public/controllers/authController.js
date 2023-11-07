@@ -108,7 +108,6 @@ export const google = catchAsync(async (req, res, next) => {
 // protect routes
 export const protect = catchAsync(async (req, res, next) => {
   const token = req.cookies.access_token;
-
   if (!token) {
     return next(
       new AppError("You are not logged in! please login to continue", 401)
@@ -125,7 +124,6 @@ export const protect = catchAsync(async (req, res, next) => {
 
   next();
 });
-
 // Signout user
 export const signout = catchAsync(async (req, res, next) => {
   res.clearCookie("access_token");
