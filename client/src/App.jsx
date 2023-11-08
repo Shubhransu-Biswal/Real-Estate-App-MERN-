@@ -8,22 +8,21 @@ import SignUp from "./pages/SignUp";
 import Header from "./components/Header";
 import PrivateRoute from "./components/PrivateRoute";
 import CreateListing from "./pages/CreateListing";
+import UpdateListing from "./pages/UpdateListing";
 
 const App = () => {
   return (
     <BrowserRouter>
       <Header></Header>
       <Routes>
-        <Route path="/" element={<Home></Home>}></Route>
-        <Route path="/about" element={<About></About>}></Route>
-        <Route path="/sign-up" element={<SignUp></SignUp>}></Route>
-        <Route path="/sign-in" element={<SignIn></SignIn>}></Route>
+        <Route path="/" element={<Home />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/sign-up" element={<SignUp />} />
+        <Route path="/sign-in" element={<SignIn />} />
         <Route element={<PrivateRoute />}>
-          <Route path="/profile" element={<Profile></Profile>}></Route>
-          <Route
-            path="/create-listing"
-            element={<CreateListing></CreateListing>}
-          ></Route>
+          <Route path="/profile" element={<Profile />} />
+          <Route path="/create-listing" element={<CreateListing />} />
+          <Route path="/update-listing/:id" element={<UpdateListing />} />
         </Route>
       </Routes>
     </BrowserRouter>
