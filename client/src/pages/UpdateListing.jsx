@@ -158,7 +158,7 @@ const UpdateListing = () => {
       if (!response.ok) {
         throw new Error(data.message);
       }
-      navigate(`/listing/${currentUser.body.newUser._id}`);
+      navigate(`/listing/${data.body.updatedListing._id}`);
       setLoading(false);
       setError(null);
     } catch (err) {
