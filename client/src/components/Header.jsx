@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux/es/hooks/useSelector";
-// import { BiSearchAlt } from "react-icons/fa";
+import { FiSearch } from "react-icons/fi";
 const Header = () => {
   const currentUserProfile = useSelector((state) => state.user.currentUser);
   return (
@@ -16,14 +16,14 @@ const Header = () => {
             <span className="text-black">Estate</span>
           </h1>
         </Link>
-        <form className="bg-slate-100">
+        <form className="bg-slate-100 flex justify-between items-center">
           <input
             type="text"
             placeholder="Search..."
             className=" bg-transparent w-24 sm:w-64 focus:outline-none"
           />
 
-          {/* <BiSearchAlt></BiSearchAlt> */}
+          <FiSearch></FiSearch>
         </form>
         <ul className="flex gap-5">
           <Link to="/about">
