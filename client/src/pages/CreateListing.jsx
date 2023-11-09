@@ -139,7 +139,7 @@ const CreateListing = () => {
       if (!response.ok) {
         throw new Error(data.message);
       }
-      navigate(`/listing/${data.body.updatedListing._id}`);
+      navigate(`/listing/${data.body.listing._id}`);
       setLoading(false);
       setError(null);
     } catch (err) {
