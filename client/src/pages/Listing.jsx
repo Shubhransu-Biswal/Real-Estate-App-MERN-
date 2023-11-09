@@ -74,6 +74,7 @@ const Listing = () => {
             <FaShare
               className="text-slate-500"
               onClick={() => {
+                // copy to clipboard
                 navigator.clipboard.writeText(window.location.href);
                 setCopied(true);
                 setTimeout(() => {
