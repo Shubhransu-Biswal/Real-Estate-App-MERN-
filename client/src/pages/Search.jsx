@@ -54,7 +54,7 @@ export default function Search() {
       const searchQuery = urlParams.toString();
       const res = await fetch(`/api/v1/listing/read?${searchQuery}`);
       const data = await res.json();
-      if (data.length > 8) {
+      if (data.body.listings.length > 8) {
         setShowMore(true);
       } else {
         setShowMore(false);
@@ -120,9 +120,9 @@ export default function Search() {
     const urlParams = new URLSearchParams(location.search);
     urlParams.set("startIndex", startIndex);
     const searchQuery = urlParams.toString();
-    const res = await fetch(`/api/listing/get?${searchQuery}`);
+    const res = await fetch(`/api/v1/listing/read?${searchQuery}`);
     const data = await res.json();
-    if (data.length < 9) {
+    if (data.body.listings.length < 9) {
       setShowMore(false);
     }
     setListings([...listings, ...data]);
