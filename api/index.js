@@ -6,6 +6,7 @@ import authRouter from "./public/routers/authRouter.js";
 import listingRouter from "./public/routers/listingRouter.js";
 import AppError from "./public/utils/appError.js";
 import cookieParser from "cookie-parser";
+import path from "path";
 const app = express();
 
 // allowing sending json to server
@@ -23,10 +24,16 @@ mongoose
   .then(() => console.log("Connected to database"))
   .catch((err) => console.log(err.message));
 
+// pre installation
+const __dirname = path.resolve();
+
 // all routes
 app.use("/api/v1/users", userRouter);
 app.use("/api/v1/auth", authRouter);
 app.use("/api/v1/listing", listingRouter);
+
+// pre installation
+app.use(express.static(path.join(__dirname, "client/dist")));
 
 // Handling unwanted route error
 app.all("*", (req, res, next) => {
