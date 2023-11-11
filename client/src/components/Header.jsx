@@ -22,51 +22,62 @@ const Header = () => {
     }
   }, [location.search]);
   return (
-    <header className="bg-slate-200 shadow-md">
-      <div className="flex justify-between p-4 mx-auto max-w-6xl">
+    <header className="shadow-md h-auto fixed w-full z-20 backdrop-blur-md">
+      <div className="flex justify-between flex-wrap w-full h-full p-4 text-white">
         <Link to="/">
           <h1
-            className="flex flex-wrap text-sm sm:text-xl font-bold drop-shadow-md
+            className="flex flex-wrap text-sm sm:text-3xl font-bold drop-shadow-md
           "
           >
-            <span className="text-sky-400 drop-shadow-sm">SriRAM</span>
-            <span className="text-black">Estate</span>
+            <span className="text-sky-400 [text-shadow:_2px_3px_4px_black]">
+              D
+            </span>
+            <span className="text-white rotate-180 [text-shadow:_2px_3px_4px_black]">
+              D
+            </span>
           </h1>
         </Link>
         <form
           onSubmit={handleSubmit}
-          className="bg-slate-100 flex justify-between items-center"
+          className="bg-slate-100 flex justify-between items-center rounded"
         >
           <input
             type="text"
             placeholder="Search..."
-            className=" bg-transparent w-24 sm:w-64 focus:outline-none"
+            className=" bg-transparent w-40 sm:w-56 md:w-80 focus:outline-none py-0 px-1 sm:p-1 text-[#0d0d0dff] "
             onChange={(e) => setSearchTerm(e.target.value)}
             value={searchTerm}
           />
-          <button>
+          <button className="mr-2 text-black">
             <FiSearch></FiSearch>
           </button>
         </form>
         <ul className="flex gap-5">
+          <Link to="/">
+            <li className="[text-shadow:_2px_3px_3px_black]">Home</li>
+          </Link>
           <Link to="/about">
-            <li className="hidden sm:inline">About</li>
+            <li className="[text-shadow:_2px_3px_3px_black]">About</li>
           </Link>
           <Link to="/profile">
-            <li className="hidden sm:inline">Profile</li>
+            <li className="[text-shadow:_2px_3px_3px_black]">Profile</li>
           </Link>
           <Link to="/sign-up">
-            <li className="hidden sm:inline">Sign Up</li>
+            <li className="[text-shadow:_2px_3px_3px_black]">Sign Up</li>
           </Link>
 
           <Link to="/profile">
             {currentUserProfile ? (
               <img
-                src={currentUserProfile.body.newUser.image}
+                src={
+                  currentUserProfile.body.newUser.image
+                    ? currentUserProfile.body.newUser.image
+                    : `https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/Windows_10_Default_Profile_Picture.svg/2048px-Windows_10_Default_Profile_Picture.svg.png`
+                }
                 className="rounded-full w-7 h-7 object-cover"
               />
             ) : (
-              <li>Sign In</li>
+              <li className="[text-shadow:_2px_3px_3px_black]">Sign In</li>
             )}
           </Link>
         </ul>

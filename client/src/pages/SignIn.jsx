@@ -43,7 +43,7 @@ const Signin = () => {
       throw new Error(responseData.message);
     }
     dispatch(signinSuccess(responseData));
-    navigate("/");
+    navigate("/profile");
   };
 
   return (

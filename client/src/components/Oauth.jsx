@@ -29,7 +29,7 @@ const Oauth = () => {
 
       const resData = await res.json();
       dispatch(signinSuccess(resData));
-      navigate("/");
+      navigate("/profile");
     } catch (error) {
       console.log(error);
     }
@@ -39,9 +39,9 @@ const Oauth = () => {
     <button
       onClick={handleGoogleClick}
       type="button"
-      className="w-full bg-blue-500 text-white py-2 rounded mt-3"
+      className="w-full bg-red-600 text-white py-2 rounded mt-3"
     >
-      Oauth
+      Sign up with google
     </button>
   );
 };

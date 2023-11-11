@@ -198,7 +198,11 @@ const Profile = () => {
       <div className="flex flex-col justify-center items-center">
         <img
           onClick={() => imageRef.current.click()}
-          src={formData.image || currentUser.body.newUser.image}
+          src={
+            formData.image || currentUser.body.newUser.image
+              ? currentUser.body.newUser.image
+              : `https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/Windows_10_Default_Profile_Picture.svg/2048px-Windows_10_Default_Profile_Picture.svg.png`
+          }
           alt="Profile"
           className="w-32 h-32 rounded-full cursor-pointer"
         />
