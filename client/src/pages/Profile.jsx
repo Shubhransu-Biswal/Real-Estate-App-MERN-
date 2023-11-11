@@ -37,7 +37,6 @@ const Profile = () => {
   const [updateSuccess, setUpdateSuccess] = useState(false);
   const [imageUpload, setImageUpload] = useState(false);
   const dispatch = useDispatch();
-
   useEffect(() => {
     if (file) {
       handleFileUpload(file);

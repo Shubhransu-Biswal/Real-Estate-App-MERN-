@@ -11,8 +11,6 @@ export const uesrController = (req, res, next) => {
 
 // Update user
 export const updateUser = catchAsync(async (req, res, next) => {
-  console.log(req.body);
-
   if (req.params.id !== req.user.id) {
     return next(new AppError("You can only change your details", 401));
   }

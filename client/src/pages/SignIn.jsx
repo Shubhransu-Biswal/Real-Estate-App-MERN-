@@ -42,9 +42,10 @@ const Signin = () => {
       setError(responseData.message);
       throw new Error(responseData.message);
     }
-    dispatch(signinSuccess(responseData.body.user));
+    dispatch(signinSuccess(responseData));
     navigate("/");
   };
+
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100">
       <form

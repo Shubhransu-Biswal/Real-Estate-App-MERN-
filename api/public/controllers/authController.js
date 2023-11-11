@@ -4,6 +4,7 @@ import AppError from "../utils/appError.js";
 import jwt from "jsonwebtoken";
 import { promisify } from "util";
 import { access } from "fs";
+import { Console } from "console";
 export const signup = catchAsync(async (req, res, next) => {
   const { userName, password, email } = req.body;
   if (!userName || !password || !email) {
@@ -42,12 +43,15 @@ export const signin = catchAsync(async (req, res, next) => {
     }
   );
 
-  res.cookie("access_token", token, { httpOnly: true }).status(200).json({
-    status: "success",
-    body: {
-      user,
-    },
-  });
+  res
+    .cookie("access_token", token, { httpOnly: true })
+    .status(200)
+    .json({
+      status: "success",
+      body: {
+        newUser: user,
+      },
+    });
   res.send("done");
 });
 
