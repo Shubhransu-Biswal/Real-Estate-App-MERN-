@@ -54,16 +54,24 @@ const Header = () => {
         </form>
         <ul className="flex gap-5">
           <Link to="/">
-            <li className="[text-shadow:_2px_3px_3px_black]">Home</li>
+            <li className="[text-shadow:_2px_3px_3px_black] hover:[text-shadow:_1px_1px_3px_black] transition-all ">
+              Home
+            </li>
           </Link>
           <Link to="/about">
-            <li className="[text-shadow:_2px_3px_3px_black]">About</li>
+            <li className="[text-shadow:_2px_3px_3px_black] hover:[text-shadow:_1px_1px_3px_black] transition-all">
+              About
+            </li>
           </Link>
           <Link to="/profile">
-            <li className="[text-shadow:_2px_3px_3px_black]">Profile</li>
+            <li className="[text-shadow:_2px_3px_3px_black] hover:[text-shadow:_1px_1px_3px_black] transition-all">
+              Profile
+            </li>
           </Link>
           <Link to="/sign-up">
-            <li className="[text-shadow:_2px_3px_3px_black]">Sign Up</li>
+            <li className="[text-shadow:_2px_3px_3px_black] hover:[text-shadow:_1px_1px_3px_black] transition-all">
+              Sign Up
+            </li>
           </Link>
 
           <Link to="/profile">
