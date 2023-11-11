@@ -33,6 +33,7 @@ const Profile = () => {
   const [formData, setFormData] = useState({});
   const [listingError, setListingError] = useState(false);
   const [userListings, setUserListings] = useState([]);
+  const [listShowing, setListShowing] = useState(false);
   // timeout useStates
   const [updateSuccess, setUpdateSuccess] = useState(false);
   const [imageUpload, setImageUpload] = useState(false);
@@ -158,6 +159,7 @@ const Profile = () => {
         throw new Error(resData.message);
       }
       setUserListings(resData.body.listings);
+      setListShowing((prev) => !prev);
     } catch (err) {
       console.log(err.message);
     }
@@ -191,8 +193,13 @@ const Profile = () => {
       setImageUpload(false);
     }, 5000);
   }
+
+  const hideListing = () => {
+    setUserListings([]);
+    setListShowing(false);
+  };
   return (
-    <div className="max-w-md mx-auto p-4 space-y-6">
+    <div className=" flex flex-col justify-center items-center p-20 h-auto space-y-6 w-full bg-[#0d0d0dff] overflow-hidden">
       <h1 className="text-2xl font-bold text-center">Profile</h1>
 
       <div className="flex flex-col justify-center items-center">
@@ -221,7 +228,7 @@ const Profile = () => {
         </div>
       </div>
 
-      <form onSubmit={submitHandler}>
+      <form onSubmit={submitHandler} className="w-[80%] sm:w-[50%] md:w-[40%]">
         <div className="space-y-4">
           <div>
             <input
@@ -277,11 +284,11 @@ const Profile = () => {
             className=" block mt-4 text-center disabled:bg-blue-300 w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600"
             to="/create-listing"
           >
-            listing page
+            Create Listing
           </Link>
         </div>
       </form>
-      <div className="flex justify-between">
+      <div className="flex justify-between w-[80%] sm:w-[50%] md:w-[40%]">
         <span onClick={deleteHandler} className="text-red-600 cursor-pointer">
           Delete account
         </span>
@@ -296,19 +303,27 @@ const Profile = () => {
         </p>
         <p className="text-red-500">{error ? error : ""}</p>
       </div>
-      <div className="text-center text-green-600">
-        <button onClick={handleShowListings}>Show Listing</button>
+      <div className="text-center text-green-600 ">
+        <button className="mr-2 border-b-2" onClick={handleShowListings}>
+          Show Listings
+        </button>
+        <button
+          className={`ml-2 border-b-2 ${listShowing ? "" : "hidden"}`}
+          onClick={hideListing}
+        >
+          Hide Listings
+        </button>
       </div>
       <p>{listingError ? "Error showing listings" : ""}</p>
       {userListings && userListings.length > 0 && (
         <div className="flex flex-col gap-4">
-          <h1 className="text-center mt-7 text-2xl font-semibold">
+          <h1 className="text-center mt-3 text-2xl font-semibold text-white">
             Your Listings
           </h1>
           {userListings.map((listing) => (
             <div
               key={listing._id}
-              className="border rounded-lg p-3 flex justify-between items-center gap-4"
+              className="border rounded-lg p-3 flex justify-between items-center gap-4 "
             >
               <Link to={`/listing/${listing._id}`}>
                 <img
