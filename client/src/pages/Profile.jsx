@@ -316,7 +316,9 @@ const Profile = () => {
           Hide Listings
         </button>
       </div>
-      <p>{listingError ? "Error showing listings" : ""}</p>
+      <p className="text-white">
+        {listingError ? "Error showing listings" : ""}
+      </p>
       {userListings && userListings.length > 0 && (
         <div className="flex flex-col gap-4">
           <h1 className="text-center mt-3 text-2xl font-semibold text-white">
