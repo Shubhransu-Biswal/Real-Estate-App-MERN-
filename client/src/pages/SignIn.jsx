@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom"; // Import Link from react-router-dom
 import { useDispatch, useSelector } from "react-redux";
+import { MdEmail } from "react-icons/md";
 import {
   signinStart,
   signinFailed,
@@ -47,7 +48,7 @@ const Signin = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
+    <div className="min-h-screen flex items-center justify-center bg-[#0d0d0dff]">
       <form
         onSubmit={submitHandler}
         className="bg-white p-8 rounded shadow-md w-96"
@@ -71,8 +72,9 @@ const Signin = () => {
             id="password"
           />
         </div>
-        <button className="w-full bg-blue-500 text-white py-2 rounded">
-          {loading ? "Signing in..." : "Sign in"}
+        <button className="w-full bg-blue-500 text-white py-2 rounded flex justify-center items-center">
+          {loading ? "Signing in..." : "Sign in with Email"}{" "}
+          <MdEmail className="text-[2rem] ml-5 text-red-700"></MdEmail>
         </button>
         <Oauth></Oauth>
         {error && <p>{error}</p>}

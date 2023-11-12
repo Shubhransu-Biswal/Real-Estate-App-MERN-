@@ -200,7 +200,9 @@ const Profile = () => {
   };
   return (
     <div className=" flex flex-col justify-center items-center p-20 h-auto space-y-6 w-full bg-[#0d0d0dff] overflow-hidden">
-      <h1 className="text-2xl font-bold text-center">Profile</h1>
+      <h1 className="text-2xl font-bold text-center text-[#f2b700ff]">
+        Profile
+      </h1>
 
       <div className="flex flex-col justify-center items-center">
         <img
