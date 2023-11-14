@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom"; // Import Link from react-router-dom
 import Oauth from "../components/Oauth";
 import { MdEmail } from "react-icons/md";
+import bgImage from "../assets/image-1.jpg";
 
 const Signup = () => {
   const [formData, setFormData] = useState({});
@@ -41,10 +42,18 @@ const Signup = () => {
     navigate("/sign-in");
   };
   return (
-    <div className="min-h-screen flex items-center justify-center bg-[#0d0d0dff] ">
+    <div
+      className="min-h-screen flex items-center justify-center"
+      style={{
+        backgroundImage: `url(${bgImage})`,
+        backgroundPosition: "center",
+        backgroundSize: "cover",
+        backgroundRepeat: "no-repeat",
+      }}
+    >
       <form
         onSubmit={submitHandler}
-        className="bg-white p-8 rounded shadow-md w-96"
+        className=" bg-black/20 p-8 rounded shadow-md w-96 backdrop-blur-lg"
       >
         <h2 className="text-2xl font-semibold mb-4">Sign Up</h2>
         <div className="mb-4">
@@ -74,13 +83,13 @@ const Signup = () => {
             id="password"
           />
         </div>
-        <button className="w-full bg-blue-500 text-white py-2 rounded flex justify-center items-center">
+        <button className="w-full bg-blue-500 text-white py-3 rounded flex justify-center items-center">
           {loading ? "Signing up..." : "Sign up with Email"}
-          <MdEmail className="text-[2rem] ml-5 text-red-700"></MdEmail>
+          {/* <MdEmail className="text-[2rem] ml-5 text-red-700"></MdEmail> */}
         </button>
         <Oauth></Oauth>
         {error && <p>{error}</p>}
-        <p className="mt-4 text-gray-600 text-sm">
+        <p className="mt-4 text-gray-300 text-sm">
           Already have an account?{" "}
           <Link to="/sign-in" className="text-blue-500">
             Sign In

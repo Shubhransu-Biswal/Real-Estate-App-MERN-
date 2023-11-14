@@ -22,6 +22,7 @@ import {
 } from "firebase/storage";
 import { app } from "../firebase";
 import { Link } from "react-router-dom";
+import default_user from "../assets/default_user.png";
 
 const Profile = () => {
   const { error, loading } = useSelector((state) => state.user);
@@ -210,7 +211,7 @@ const Profile = () => {
           src={
             formData.image || currentUser.body.newUser.image
               ? currentUser.body.newUser.image
-              : `https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/Windows_10_Default_Profile_Picture.svg/2048px-Windows_10_Default_Profile_Picture.svg.png`
+              : default_user
           }
           alt="Profile"
           className="w-32 h-32 rounded-full cursor-pointer"

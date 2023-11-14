@@ -48,7 +48,7 @@ export default function Home() {
     <div className="relative w-full h-auto overflow-hidden bg-[#0d0d0dff]">
       {/* top */}
       <div className="gap-6 max-w-[80%] mx-auto mt-[31rem]   relative -top-20 z-10 bg-[linear-gradient(to_right,#151515ff_50%,#151515ff_50%)] shadow-md shadow-[#f2b700ff]/20 hover:shadow-[#f2b700ff]/10 transition-shadow duration-300">
-        <div className="w-[50%] p-16 px-10 flex flex-col ">
+        <div className="w-[50%] p-16 px-10 flex flex-col max-[501px]:w-full">
           <h1 className="text-slate-700 font-bold text-3xl lg:text-6xl">
             Find your next <span className="text-slate-500">perfect</span>
             <br />
@@ -67,7 +67,7 @@ export default function Home() {
             Let's Get Started...
           </Link>
         </div>
-        <div className="absolute top-0 left-[50%] w-[50%] h-full">
+        <div className="absolute top-0 left-[50%] w-[50%] h-full max-[501px]:hidden">
           <img src={frontImage} alt="" className="w-full h-full object-cover" />
         </div>
       </div>
