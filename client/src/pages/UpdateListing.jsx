@@ -168,7 +168,7 @@ const UpdateListing = () => {
   };
   return (
     <main className="bg-[#151515ff]  w-full min-h-screen overflow-hidden ">
-      <div className=" mt-20 max-w-[80%] mx-auto h-full">
+      <div className=" mt-20 max-w-[80%] mx-auto h-full max-[500px]:mt-[30%] max-[363px]:mt-[40%] max-[319px]:mt-[70%]">
         <h1 className="text-[#f2b700ff] text-3xl font-semibold text-center my-7">
           Update a Listing
         </h1>

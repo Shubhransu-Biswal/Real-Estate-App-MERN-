@@ -25,10 +25,10 @@ const Header = () => {
 
   return (
     <header className="shadow-md h-auto fixed w-full z-20 backdrop-blur-md bg-slate-900/50">
-      <div className="flex justify-between flex-wrap w-full h-full p-4 text-white">
+      <div className="flex justify-between  w-full h-full p-4 text-white">
         <Link to="/" className="m-1">
           <h1
-            className="flex flex-wrap text-lg sm:text-3xl font-bold drop-shadow-md
+            className="flex flex-wrap text-2xl sm:text-3xl font-bold drop-shadow-md mr-2 mb-0 min-w-[2.5rem]
           "
           >
             <span className="text-[#f2b700ff] [text-shadow:_2px_3px_4px_black]">
@@ -39,10 +39,10 @@ const Header = () => {
             </span>
           </h1>
         </Link>
-        <div className="flex flex-wrap justify-center items-center">
+        <div className="flex flex-wrap justify-center items-center ">
           <form
             onSubmit={handleSubmit}
-            className="bg-slate-100 rounded mr-2 px-2 w-40 sm:w-56 md:w-72 h-7 flex justify-center items-center relative m-1"
+            className="bg-slate-100 rounded mr-2 px-2 py-3 w-40 sm:w-56 md:w-72 h-7 flex justify-center items-center relative m-2 "
           >
             <input
               type="text"
@@ -105,7 +105,8 @@ const Header = () => {
                       ? currentUserProfile.body.newUser.image
                       : default_user
                   }
-                  className="rounded-full w-7 h-7 object-cover"
+                  alt="profile"
+                  className="rounded-full w-7 h-7 object-cover border-2 border-white"
                 />
               ) : (
                 <li
